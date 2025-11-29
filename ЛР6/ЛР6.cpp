@@ -1,48 +1,44 @@
-﻿#include <iostream>
-#include <vector>
-#include <cmath>    
+#include <iostream>
+#include <windows.h>
+
 using namespace std;
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
     int n;
-    cout << "Введіть кількість елементів n: ";
-    if (!(cin >> n) || n <= 0) {
-        cerr << "Невірне значення n\n";
-        return 1;
-    }
+    cout << "Введіть кількість елементів масиву: ";
+    cin >> n;
 
-    vector<long long> a(n);
-    cout << "Введіть " << n << " цілих(і) елемент(ів) масиву, розділених пробілами або Enter:\n";
-    for (int i = 0; i < n; ++i) {
+    int a[100]; 
+
+    cout << "Введіть " << n << " елементів масиву:\n";
+    for (int i = 0; i < n; i++) {
         cin >> a[i];
     }
 
-    // 1) Піднести кожен елемент до кубу.
-    for (int i = 0; i < n; ++i) {
-        long long x = a[i];
-        a[i] = x * x * x; // еквівалент pow(x,3) але точніше і швидше для цілих
+    // 1. Піднести кожен елемент до кубу
+    for (int i = 0; i < n; i++) {
+        a[i] = a[i] * a[i] * a[i];   
     }
 
-    // 2) Сортування методом обміну (bubble sort) за спаданням
-    bool swapped = true;
-    for (int pass = 0; pass < n - 1 && swapped; ++pass) {
-        swapped = false;
-        for (int j = 0; j < n - 1 - pass; ++j) {
-            if (a[j] < a[j + 1]) {         
-                swap(a[j], a[j + 1]);
-                swapped = true;
+    // 2. Сортування методом обміну (bubble sort) за спаданням
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (a[j] < a[j + 1]) {
+                int temp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = temp;
             }
         }
     }
 
-    // 3) Вивід відсортованого масиву
-    cout << "Відсортований за спаданням масив після піднесення до кубу:\n";
-    for (int i = 0; i < n; ++i) {
-        cout << a[i] << (i + 1 < n ? ' ' : '\n');
+    // 3. Вивести відсортований масив
+    cout << "\nМасив після піднесення до кубу та сортування за спаданням:\n";
+    for (int i = 0; i < n; i++) {
+        cout << a[i] << " ";
     }
+    cout << endl;
 
     return 0;
 }
